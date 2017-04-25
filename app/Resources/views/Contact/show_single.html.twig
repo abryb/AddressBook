@@ -1,4 +1,7 @@
 {% extends "base.html.twig" %}
 {% block body %}
-        {{ include(":Contact:show.html.twig", {'contact':contact}) }}
+    {{ include(":Contact:show.html.twig", {'contact':contact}) }}
+    <form action="{{ path('addressbook_contact_modify', {'id':contact.id}) }}" method="POST">
+        <button>Modify</button>
+    </form>
 {% endblock %}
