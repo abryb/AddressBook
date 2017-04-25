@@ -2,6 +2,13 @@
 {% block body %}
     {% for contact in contacts %}
         {{ include(":Contact:show.html.twig", {'contact':contact}) }}
+        <form action="{{ path('addressbook_contact_delete', {'id':contact.id}) }}" method="POST">
+            <button>Delete</button>
+        </form>
+        <form action="{{ path('addressbook_contact_modify', {'id':contact.id}) }}" method="POST">
+            <button>Modify</button>
+        </form>
+        <hr>
     {% else %}
         <h3>Contact Book is empty</h3>
     {% endfor %}

@@ -60,6 +60,7 @@ class ContactController extends Controller
 
     /**
      * @Route("/{id}/delete")
+     * @Method("POST")
      */
     public function deleteAction($id)
     {
