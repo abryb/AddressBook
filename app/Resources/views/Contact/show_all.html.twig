@@ -1,0 +1,8 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    {% for contact in contacts %}
+        {{ include(":Contact:show.html.twig", {'contact':contact}) }}
+    {% else %}
+        <h3>Contact Book is empty</h3>
+    {% endfor %}
+{% endblock %}
