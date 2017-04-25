@@ -18,7 +18,7 @@ class ContactController extends Controller
      */
     public function showAllAction()
     {
-        $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->findAll();
+        $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->findBy([], ['surname' => 'ASC']);
         return ['contacts' => $contacts];
     }
 
@@ -52,7 +52,7 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
-            return $this->redirectToRoute('addressbook_contact_show', ['id'=>$contact->getId()]);
+            return $this->redirectToRoute('addressbook_contact_show', ['id' => $contact->getId()]);
         }
 
         return ['form' => $form->createView()];
