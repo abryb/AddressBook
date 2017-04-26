@@ -51,4 +51,33 @@ class EmailController extends Controller
 
         return $this->redirectToRoute("addressbook_contact_modify", ['id' => $id]);
     }
+
+    /**
+     * @Route("/{id}/deleteEmail/")
+     * @Method("POST")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->find($id);
+        if (!$contact) {
+            throw $this->createNotFoundException("Contact not found");
+        }
+
+        $email = $this->getDoctrine()->getRepository("AddressBookBundle:Email")
+            ->find($request->request->get("email_id"));
+        if (!$email) {
+            throw $this->createNotFoundException("Email not found");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($email);
+        $contact->removeEmail($email);
+
+        $em->flush();
+
+        return $this->redirectToRoute('addressbook_contact_show', ['id' => $id]);
+    }
+
+
 }

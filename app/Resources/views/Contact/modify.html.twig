@@ -9,32 +9,38 @@
         <div>
             <p>Phone numbers: </p>
             {% for phone in contact.phones %}
-                <form class="delete" method="POST" action="">
+                <form class="delete" method="POST" action="{{ path('addressbook_phone_delete', {'id':contact.id}) }}">
+                    <input type="hidden" name="phone_id" value="{{ phone.id }}">
                     <button class="delete" type="submit">Delete</button>
                 </form>
-                    <p class="delete" >{{ phone.number }}, {{ phone.type }}</p>
+                <p class="delete">{{ phone.number }}, {{ phone.type }}</p>
+                <br>
             {% endfor %}
         </div>
         <hr>
         <div>
             <p>Addresses: </p>
             {% for address in contact.addresses %}
-                <form class="delete" method="POST" action="">
+                <form class="delete" method="POST" action="{{ path('addressbook_address_delete', {'id':contact.id}) }}">
+                    <input type="hidden" name="address_id" value="{{ address.id }}">
                     <button class="delete" type="submit">Delete</button>
                 </form>
-                    <address class="delete">
-                        {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
-                    </address>
+                <address class="delete">
+                    {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
+                </address>
+                <br>
             {% endfor %}
         </div>
         <hr>
         <div>
             <p>Emails: </p>
             {% for email in contact.emails %}
-                <form class="delete" method="POST" action="">
+                <form class="delete" method="POST" action="{{ path('addressbook_email_delete', {'id':contact.id}) }}">
+                    <input type="hidden" name="email_id" value="{{ email.id }}">
                     <button class="delete" type="submit">Delete</button>
                 </form>
-                    <p class="delete">{{ email.emailAddress }}, {{ email.type }}</p>
+                <p class="delete">{{ email.emailAddress }}, {{ email.type }}</p>
+                <br>
             {% endfor %}
         </div>
     </div>
