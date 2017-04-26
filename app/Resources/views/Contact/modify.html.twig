@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 {% block body %}
+    <p>Modify Contact:</p>
     {{ form_start(formContact) }}
     {{ form_widget(formContact) }}
     <input type="submit">
@@ -10,4 +11,10 @@
     {{ form_widget(formAddress) }}
     <input type="submit">
     {{ form_end(formAddress) }}
+    <hr>
+    <p>Add phone number:</p>
+    {{ form_start(formPhone) }}
+    {{ form_widget(formPhone) }}
+    <input type="submit">
+    {{ form_end(formPhone) }}
 {% endblock %}

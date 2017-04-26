@@ -1,8 +1,19 @@
 {% extends "base.html.twig" %}
 {% block body %}
     <div>
-        <h3>{{ contact.name }} {{ contact.surname }}</h3>
+        <h1>{{ contact.name }} {{ contact.surname }}</h1>
+        <hr>
         <p>{{ contact.description }}</p>
+        <hr>
+        <p>Phone numbers</p>
+        <ul>
+        {% for phone in contact.phones %}
+            <li>
+                {{ phone.number }}, {{ phone.type }}
+            </li>
+        {% endfor %}
+        </ul>
+        <hr>
         {% for address in contact.addresses %}
             <address>
                 {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
