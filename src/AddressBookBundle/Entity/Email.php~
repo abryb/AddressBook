@@ -5,12 +5,12 @@ namespace AddressBookBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Phone
+ * Email
  *
- * @ORM\Table(name="phone")
- * @ORM\Entity(repositoryClass="AddressBookBundle\Repository\PhoneRepository")
+ * @ORM\Table(name="email")
+ * @ORM\Entity(repositoryClass="AddressBookBundle\Repository\EmailRepository")
  */
-class Phone
+class Email
 {
     /**
      * @var int
@@ -24,9 +24,9 @@ class Phone
     /**
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255)
+     * @ORM\Column(name="emialAddress", type="string", length=255)
      */
-    private $number;
+    private $emialAddress;
 
     /**
      * @var string
@@ -37,7 +37,7 @@ class Phone
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\Contact", inversedBy="phones")
+     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\Contact", inversedBy="emails")
      */
     private $contact;
 
@@ -53,33 +53,33 @@ class Phone
     }
 
     /**
-     * Set number
+     * Set emialAddress
      *
-     * @param string $number
-     * @return Phone
+     * @param string $emialAddress
+     * @return Email
      */
-    public function setNumber($number)
+    public function setEmialAddress($emialAddress)
     {
-        $this->number = $number;
+        $this->emialAddress = $emialAddress;
 
         return $this;
     }
 
     /**
-     * Get number
+     * Get emialAddress
      *
      * @return string 
      */
-    public function getNumber()
+    public function getEmialAddress()
     {
-        return $this->number;
+        return $this->emialAddress;
     }
 
     /**
      * Set type
      *
      * @param string $type
-     * @return Phone
+     * @return Email
      */
     public function setType($type)
     {
@@ -96,28 +96,5 @@ class Phone
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set contact
-     *
-     * @param \AddressBookBundle\Entity\Contact $contact
-     * @return Phone
-     */
-    public function setContact(\AddressBookBundle\Entity\Contact $contact = null)
-    {
-        $this->contact = $contact;
-
-        return $this;
-    }
-
-    /**
-     * Get contact
-     *
-     * @return \AddressBookBundle\Entity\Contact 
-     */
-    public function getContact()
-    {
-        return $this->contact;
     }
 }

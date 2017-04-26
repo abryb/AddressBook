@@ -5,12 +5,12 @@ namespace AddressBookBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Phone
+ * Email
  *
- * @ORM\Table(name="phone")
- * @ORM\Entity(repositoryClass="AddressBookBundle\Repository\PhoneRepository")
+ * @ORM\Table(name="email")
+ * @ORM\Entity(repositoryClass="AddressBookBundle\Repository\EmailRepository")
  */
-class Phone
+class Email
 {
     /**
      * @var int
@@ -24,9 +24,9 @@ class Phone
     /**
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255)
+     * @ORM\Column(name="emailAddress", type="string", length=255)
      */
-    private $number;
+    private $emailAddress;
 
     /**
      * @var string
@@ -37,7 +37,9 @@ class Phone
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\Contact", inversedBy="phones")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\Contact", inversedBy="emails")
      */
     private $contact;
 
@@ -53,33 +55,33 @@ class Phone
     }
 
     /**
-     * Set number
+     * Set emailAddress
      *
-     * @param string $number
-     * @return Phone
+     * @param string $emailAddress
+     * @return Email
      */
-    public function setNumber($number)
+    public function setEmailAddress($emailAddress)
     {
-        $this->number = $number;
+        $this->emailAddress = $emailAddress;
 
         return $this;
     }
 
     /**
-     * Get number
+     * Get emailAddress
      *
      * @return string 
      */
-    public function getNumber()
+    public function getEmailAddress()
     {
-        return $this->number;
+        return $this->emailAddress;
     }
 
     /**
      * Set type
      *
      * @param string $type
-     * @return Phone
+     * @return Email
      */
     public function setType($type)
     {
@@ -102,7 +104,7 @@ class Phone
      * Set contact
      *
      * @param \AddressBookBundle\Entity\Contact $contact
-     * @return Phone
+     * @return Email
      */
     public function setContact(\AddressBookBundle\Entity\Contact $contact = null)
     {

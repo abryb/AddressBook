@@ -26,4 +26,13 @@
     {{ form_widget(formAddress) }}
     <input type="submit">
     {{ form_end(formAddress) }}
+    <hr>
+    {% for email in contact.emails %}
+        <p>{{ email.emailAddress }}, {{ email.type }}</p>
+    {% endfor %}
+    <p>Add Email.</p>
+    {{ form_start(formEmail) }}
+    {{ form_widget(formEmail) }}
+    <input type="submit">
+    {{ form_end(formEmail) }}
 {% endblock %}

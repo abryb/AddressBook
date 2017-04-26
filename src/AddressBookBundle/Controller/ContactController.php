@@ -5,8 +5,10 @@ namespace AddressBookBundle\Controller;
 use AddressBookBundle\Entity\Address;
 use AddressBookBundle\Entity\Contact;
 use AddressBookBundle\Entity\Phone;
+use AddressBookBundle\Entity\Email;
 use AddressBookBundle\Form\AddressType;
 use AddressBookBundle\Form\ContactType;
+use AddressBookBundle\Form\EmailType;
 use AddressBookBundle\Form\PhoneType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -93,6 +95,9 @@ class ContactController extends Controller
         $phone = new Phone();
         $phone->setContact($contact);
 
+        $email = new Email();
+        $email->setContact($contact);
+
         $formContact = $this->createForm(ContactType::class, $contact);
 
         $formAddress = $this->createForm(AddressType::class, $address, [
@@ -101,6 +106,10 @@ class ContactController extends Controller
 
         $formPhone = $this->createForm(PhoneType::class, $phone, [
             'action' => $this->generateUrl("addressbook_phone_addphone", ['id' => $contact->getId()]),
+            'method' => 'POST']);
+
+        $formEmail = $this->createForm(EmailType::class, $email, [
+            'action' => $this->generateUrl("addressbook_email_addemail", ['id' => $contact->getId()]),
             'method' => 'POST']);
 
 
@@ -118,6 +127,7 @@ class ContactController extends Controller
             'formContact' => $formContact->createView(),
             'formAddress' => $formAddress->createView(),
             'formPhone' => $formPhone->createView(),
+            'formEmail' => $formEmail->createView(),
             'contact' => $contact,
         ];
     }
