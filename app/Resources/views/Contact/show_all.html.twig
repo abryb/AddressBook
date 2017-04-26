@@ -4,17 +4,12 @@
     <hr>
     {% for contact in contacts %}
         <div>
-            <h3>
-                <a href="{{ path('addressbook_contact_show', {'id':contact.id}) }}">
-                    {{ contact.name }} {{ contact.surname }}
-                </a>
-            </h3>
-            <form action="{{ path('addressbook_contact_delete', {'id':contact.id}) }}" method="POST">
-                <button>Delete</button>
+            <form class="delete" action="{{ path('addressbook_contact_delete', {'id':contact.id}) }}"
+                  method="POST">
+                <button class="delete">Delete</button>
             </form>
-            <form action="{{ path('addressbook_contact_modify', {'id':contact.id}) }}" method="POST">
-                <button>Modify</button>
-            </form>
+            <a class = "show-all" href="{{ path('addressbook_contact_show', {'id':contact.id}) }}">{{ contact.name }} {{ contact.surname }}</a>
+            <a href="{{ path('addressbook_contact_modify', {'id':contact.id}) }}">modify</a>
         </div>
         <hr>
     {% else %}

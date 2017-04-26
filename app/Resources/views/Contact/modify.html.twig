@@ -9,32 +9,32 @@
         <div>
             <p>Phone numbers: </p>
             {% for phone in contact.phones %}
-                <form method="POST" action="">
-                    <p>{{ phone.number }}, {{ phone.type }}</p>
-                    <button type="submit">Delete</button>
+                <form class="delete" method="POST" action="">
+                    <button class="delete" type="submit">Delete</button>
                 </form>
+                    <p class="delete" >{{ phone.number }}, {{ phone.type }}</p>
             {% endfor %}
         </div>
         <hr>
         <div>
             <p>Addresses: </p>
             {% for address in contact.addresses %}
-                <form method="POST" action="">
-                    <address>
+                <form class="delete" method="POST" action="">
+                    <button class="delete" type="submit">Delete</button>
+                </form>
+                    <address class="delete">
                         {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
                     </address>
-                    <button type="submit">Delete</button>
-                </form>
             {% endfor %}
         </div>
         <hr>
         <div>
             <p>Emails: </p>
             {% for email in contact.emails %}
-                <form method="POST" action="">
-                    <p>{{ email.emailAddress }}, {{ email.type }}</p>
-                    <button type="submit">Delete</button>
+                <form class="delete" method="POST" action="">
+                    <button class="delete" type="submit">Delete</button>
                 </form>
+                    <p class="delete">{{ email.emailAddress }}, {{ email.type }}</p>
             {% endfor %}
         </div>
     </div>
