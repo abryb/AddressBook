@@ -6,15 +6,24 @@
     <input type="submit">
     {{ form_end(formContact) }}
     <hr>
-    <p>Add address: </p>
-    {{ form_start(formAddress) }}
-    {{ form_widget(formAddress) }}
-    <input type="submit">
-    {{ form_end(formAddress) }}
-    <hr>
+    <p>Phone numbers: </p>
+    {% for phone in contact.phones %}
+        <p>{{ phone.number }}, {{ phone.type }}</p>
+    {% endfor %}
     <p>Add phone number:</p>
     {{ form_start(formPhone) }}
     {{ form_widget(formPhone) }}
     <input type="submit">
     {{ form_end(formPhone) }}
+    <hr>
+    {% for address in contact.addresses %}
+        <address>
+            {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
+        </address>
+    {% endfor %}
+    <p>Add address: </p>
+    {{ form_start(formAddress) }}
+    {{ form_widget(formAddress) }}
+    <input type="submit">
+    {{ form_end(formAddress) }}
 {% endblock %}

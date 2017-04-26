@@ -1,18 +1,13 @@
 {% extends "base.html.twig" %}
 {% block body %}
     <div>
-        <h1>{{ contact.name }} {{ contact.surname }}</h1>
-        <hr>
-        <p>{{ contact.description }}</p>
-        <hr>
-        <p>Phone numbers</p>
-        <ul>
+        <h1>{{ contact.name }} {{ contact.surname }}</h1><hr>
+        <p>{{ contact.description }}</p><hr>
+
+        <p>Phone numbers: </p>
         {% for phone in contact.phones %}
-            <li>
-                {{ phone.number }}, {{ phone.type }}
-            </li>
+            <p>{{ phone.number }}, {{ phone.type }}</p>
         {% endfor %}
-        </ul>
         <hr>
         {% for address in contact.addresses %}
             <address>
@@ -20,7 +15,6 @@
             </address>
         {% endfor %}
     </div>
-
     <form action="{{ path('addressbook_contact_modify', {'id':contact.id}) }}" method="POST">
         <button>Modify</button>
     </form>

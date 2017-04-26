@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    <h4></h4><a href="{{ path('addressbook_contact_create') }}">Create new contact</a></h4>
+    <h4><a href="{{ path('addressbook_contact_create') }}">Create new contact</a></h4>
     <hr>
     {% for contact in contacts %}
         <div>

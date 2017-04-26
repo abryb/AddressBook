@@ -117,7 +117,8 @@ class ContactController extends Controller
         return [
             'formContact' => $formContact->createView(),
             'formAddress' => $formAddress->createView(),
-            'formPhone' => $formPhone->createView()
+            'formPhone' => $formPhone->createView(),
+            'contact' => $contact,
         ];
     }
 }
