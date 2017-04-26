@@ -1,35 +1,61 @@
 {% extends "base.html.twig" %}
 {% block body %}
+    <div>
+        <div>
+            <h1>{{ contact.name }} {{ contact.surname }}</h1>
+            <p>{{ contact.description }}</p>
+        </div>
+        <hr>
+        <div>
+            <p>Phone numbers: </p>
+            {% for phone in contact.phones %}
+                <form method="POST" action="">
+                    <p>{{ phone.number }}, {{ phone.type }}</p>
+                    <button type="submit">Delete</button>
+                </form>
+            {% endfor %}
+        </div>
+        <hr>
+        <div>
+            <p>Addresses: </p>
+            {% for address in contact.addresses %}
+                <form method="POST" action="">
+                    <address>
+                        {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
+                    </address>
+                    <button type="submit">Delete</button>
+                </form>
+            {% endfor %}
+        </div>
+        <hr>
+        <div>
+            <p>Emails: </p>
+            {% for email in contact.emails %}
+                <form method="POST" action="">
+                    <p>{{ email.emailAddress }}, {{ email.type }}</p>
+                    <button type="submit">Delete</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
     <p>Modify Contact:</p>
     {{ form_start(formContact) }}
     {{ form_widget(formContact) }}
     <input type="submit">
     {{ form_end(formContact) }}
     <hr>
-    <p>Phone numbers: </p>
-    {% for phone in contact.phones %}
-        <p>{{ phone.number }}, {{ phone.type }}</p>
-    {% endfor %}
     <p>Add phone number:</p>
     {{ form_start(formPhone) }}
     {{ form_widget(formPhone) }}
     <input type="submit">
     {{ form_end(formPhone) }}
     <hr>
-    {% for address in contact.addresses %}
-        <address>
-            {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
-        </address>
-    {% endfor %}
     <p>Add address: </p>
     {{ form_start(formAddress) }}
     {{ form_widget(formAddress) }}
     <input type="submit">
     {{ form_end(formAddress) }}
     <hr>
-    {% for email in contact.emails %}
-        <p>{{ email.emailAddress }}, {{ email.type }}</p>
-    {% endfor %}
     <p>Add Email.</p>
     {{ form_start(formEmail) }}
     {{ form_widget(formEmail) }}

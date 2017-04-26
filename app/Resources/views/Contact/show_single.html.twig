@@ -1,26 +1,35 @@
 {% extends "base.html.twig" %}
 {% block body %}
     <div>
-        <h1>{{ contact.name }} {{ contact.surname }}</h1><hr>
-        <p>{{ contact.description }}</p><hr>
-
-        <p>Phone numbers: </p>
-        {% for phone in contact.phones %}
-            <p>{{ phone.number }}, {{ phone.type }}</p>
-        {% endfor %}
+        <div>
+            <h1>{{ contact.name }} {{ contact.surname }}</h1>
+            <p>{{ contact.description }}</p>
+        </div>
         <hr>
-        <p>Addresses: </p>
-        {% for address in contact.addresses %}
-            <address>
-                {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
-            </address>
-        {% endfor %}
-        <p>Emails: </p>
-        {% for email in contact.emails %}
-            <p>{{ email.emailAddress }}, {{ email.type }}</p>
-        {% endfor %}
-    </div>
-    <form action="{{ path('addressbook_contact_modify', {'id':contact.id}) }}" method="POST">
+        <div>
+            <p>Phone numbers: </p>
+            {% for phone in contact.phones %}
+                <p>{{ phone.number }}, {{ phone.type }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+        <div>
+            <p>Addresses: </p>
+            {% for address in contact.addresses %}
+                <address>
+                    {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
+                </address>
+            {% endfor %}
+        </div>
+        <hr>
+        <div>
+            <p>Emails: </p>
+            {% for email in contact.emails %}
+                <p>{{ email.emailAddress }}, {{ email.type }}</p>
+            {% endfor %}
+        </div>
+    <a href="{{ path('addressbook_contact_modify', {'id':contact.id}) }}">
         <button>Modify</button>
-    </form>
+    </a>
+    </div>
 {% endblock %}
