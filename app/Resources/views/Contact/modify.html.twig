@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    {{ form_start(formContact) }}
+    {{ form_widget(formContact) }}
+    <input type="submit">
+    {{ form_end(formContact) }}
+    <hr>
+    <p>Add address: </p>
+    {{ form_start(formAddress) }}
+    {{ form_widget(formAddress) }}
+    <input type="submit">
+    {{ form_end(formAddress) }}
+{% endblock %}

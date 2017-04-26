@@ -1,6 +1,15 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    {{ include(":Contact:show.html.twig", {'contact':contact}) }}
+    <div>
+        <h3>{{ contact.name }} {{ contact.surname }}</h3>
+        <p>{{ contact.description }}</p>
+        {% for address in contact.addresses %}
+            <address>
+                {{ address.city }}, {{ address.street }} {{ address.houseNumber }} / {{ address.flatNumber }}
+            </address>
+        {% endfor %}
+    </div>
+
     <form action="{{ path('addressbook_contact_modify', {'id':contact.id}) }}" method="POST">
         <button>Modify</button>
     </form>

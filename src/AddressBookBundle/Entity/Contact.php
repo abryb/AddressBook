@@ -3,6 +3,8 @@
 namespace AddressBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Contact
@@ -42,6 +44,20 @@ class Contact
      */
     private $description;
 
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(targetEntity="AddressBookBundle\Entity\Address", mappedBy="contact")
+     */
+    private $addresses;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->addresses = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -120,5 +136,39 @@ class Contact
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add addresses
+     *
+     * @param Address $address
+     * @return Contact
+     * @internal param Address $addresses
+     */
+    public function addAddress(Address $address)
+    {
+        $this->addresses[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Remove addresses
+     *
+     * @param Address $addresses
+     */
+    public function removeAddress(Address $address)
+    {
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 }

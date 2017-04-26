@@ -2,7 +2,9 @@
 
 namespace AddressBookBundle\Controller;
 
+use AddressBookBundle\Entity\Address;
 use AddressBookBundle\Entity\Contact;
+use AddressBookBundle\Form\AddressType;
 use AddressBookBundle\Form\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -74,21 +76,28 @@ class ContactController extends Controller
 
     /**
      * @Route("/{id}/modify")
-     * @Template(":Contact:new.html.twig")
+     * @Template(":Contact:modify.html.twig")
      */
     public function modifyAction(Request $request, $id)
     {
         $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->find($id);
+        $address = new Address();
+        $address->setContact($contact);
+
 
         if (!$contact) {
             throw $this->createNotFoundException("Contact not found");
         }
 
-        $form = $this->createForm(ContactType::class, $contact);
+        $formContact = $this->createForm(ContactType::class, $contact);
 
-        $form->handleRequest($request);
+        $formAddress = $this->createForm(AddressType::class, $address, [
+            'action' => $this->generateUrl("addressbook_contact_addaddress", ['id' => $contact->getId()]),
+            'method' => 'POST']);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $formContact->handleRequest($request);
+
+        if ($formContact->isSubmitted() && $formContact->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->flush();
@@ -96,7 +105,43 @@ class ContactController extends Controller
             return $this->redirectToRoute('addressbook_contact_show', ['id' => $contact->getId()]);
         }
 
-        return ['form' => $form->createView()];
+        return [
+            'formContact' => $formContact->createView(),
+            'formAddress' => $formAddress->createView()
+        ];
+    }
+
+    /**
+     * @Route("/{id}/addAddress")
+     * @Method("POST")
+     */
+    public function addAddressAction(Request $request, $id)
+    {
+        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->find($id);
+        if (!$contact) {
+            throw $this->createNotFoundException("Contact not found");
+        }
+
+        $address = new Address();
+
+        $formAddress = $formAddress = $this->createForm(AddressType::class, $address);
+
+        $formAddress->handleRequest($request);
+
+        if ($formAddress->isSubmitted() && $formAddress->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $address->setContact($contact);
+            $contact->addAddress($address);
+
+            $em->persist($address);
+
+            $em->flush();
+
+            return $this->redirectToRoute('addressbook_contact_show', ['id' => $contact->getId()]);
+        }
+
+        return $this->redirectToRoute("addressbook_contact_modify", ['id' => $id]);
     }
 
 }
