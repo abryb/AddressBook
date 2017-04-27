@@ -7,6 +7,14 @@
         </div>
         <hr>
         <div>
+            <p>Groups:
+            {% for group in contact.groups %}
+                {{ group.name }} ,
+            {% endfor %}
+            </p>
+        </div>
+        <hr>
+        <div>
             <p>Phone numbers: </p>
             {% for phone in contact.phones %}
                 <p>{{ phone.number }}, {{ phone.type }}</p>

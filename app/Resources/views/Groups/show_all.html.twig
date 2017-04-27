@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h4><a href="{{ path('addressbook_group_new') }}">Create new Group</a></h4>
+    <hr>
+    {% for group in groups %}
+        <div>
+            <h3><a href="{{ path('addressbook_group_showsingle', {'id':group.id}) }}">{{ group.name }}</a></h3>
+        </div>
+        <hr>
+    {% else %}
+        <h3>There are no groups</h3>
+    {% endfor %}
+{% endblock %}
