@@ -1,6 +1,10 @@
 {% extends "base.html.twig" %}
 {% block body %}
     <h4><a href="{{ path('addressbook_contact_create') }}">Create new contact</a></h4>
+    <form method="GET" action="{{ path('addressbook_contact_showall') }}">
+        <input type="text" name="search">
+        <button type="submit">Search</button>
+    </form>
     <hr>
     {% for contact in contacts %}
         <div>

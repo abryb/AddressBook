@@ -22,11 +22,27 @@ class ContactController extends Controller
      * @Route("/")
      * @Template(":Contact:show_all.html.twig")
      */
-    public function showAllAction()
+    public function showAllAction(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            $contacts = $this->getDoctrine()->getManager()->getRepository("AddressBookBundle:Contact")
+                ->findContactsLike($request->query->get("search"));
+        } else {
+            $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
+                ->findBy([], ['surname' => 'ASC']);
+        }
+        return ['contacts' => $contacts];
+    }
+
+    /**
+     * @Route("/search/{string}")
+     * @Template(":Contact:show_all.html.twig")
+     */
+    public function searchAction($string)
     {
         $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
-            ->findBy([], ['surname' => 'ASC']);
-        return ['contacts' => $contacts];
+            ->findContactsLike($string);
+        return ['contacts'=>$contacts];
     }
 
 
@@ -86,7 +102,8 @@ class ContactController extends Controller
      */
     public function modifyAction(Request $request, $id)
     {
-        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->find($id);
+        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
+            ->loadAllAboutContact($id);
         if (!$contact) {
             throw $this->createNotFoundException("Contact not found");
         }

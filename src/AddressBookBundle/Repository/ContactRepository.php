@@ -21,6 +21,15 @@ class ContactRepository extends EntityRepository
                 LEFT JOIN c.groups g
                 WHERE c.id=:id";
 
-        return $this->getEntityManager()->createQuery($dql)->setParameter('id', $id)->getOneOrNullResult();
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('id', $id)->getOneOrNullResult();
+    }
+
+    public function findContactsLike($search)
+    {
+        $dql = "SELECT c FROM AddressBookBundle:Contact c WHERE c.name LIKE :search OR c.surname LIKE :search";
+
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('search', '%'.$search.'%')->getResult();
     }
 }
