@@ -9,7 +9,7 @@
         <div>
             <p>Groups:
             {% for group in contact.groups %}
-                {{ group.name }} ,
+                <a href="{{ path('addressbook_group_showsingle', {'id':group.id}) }}">{{ group.name }}</a> ,
             {% endfor %}
             </p>
         </div>
