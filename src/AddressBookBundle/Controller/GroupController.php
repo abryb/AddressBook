@@ -27,7 +27,7 @@ class GroupController extends Controller
 
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($contactGroup);
@@ -62,5 +62,4 @@ class GroupController extends Controller
 
         return ['group' => $group];
     }
-
 }

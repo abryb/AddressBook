@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class EmailController extends Controller
 {
     /**
@@ -35,9 +34,8 @@ class EmailController extends Controller
 
             $em->persist($email);
             $em->flush();
-
         }
-            return $this->redirectToRoute('addressbook_contact_show', ['id' => $id]);
+        return $this->redirectToRoute('addressbook_contact_show', ['id' => $id]);
     }
 
     /**

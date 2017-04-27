@@ -2,6 +2,8 @@
 {% block body %}
     <h1>{{ group.name }}</h1>
     {% for contact in group.contacts %}
-    <p>{{ contact.name }} {{ contact.surname }}</p>
+        <p>
+            <a href="{{ path("addressbook_contact_show", {"id":contact.id}) }}">{{ contact.name }} {{ contact.surname }}</a>
+        </p>
     {% endfor %}
 {% endblock %}
