@@ -54,6 +54,7 @@ class Address
      * @var object
      *
      * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\Contact", inversedBy="addresses")
+     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
      */
     private $contact;
 

@@ -191,9 +191,9 @@ class Contact
      * @param \AddressBookBundle\Entity\Phone $phones
      * @return Contact
      */
-    public function addPhone(\AddressBookBundle\Entity\Phone $phones)
+    public function addPhone(\AddressBookBundle\Entity\Phone $phone)
     {
-        $this->phones[] = $phones;
+        $this->phones[] = $phone;
 
         return $this;
     }
@@ -203,9 +203,9 @@ class Contact
      *
      * @param \AddressBookBundle\Entity\Phone $phones
      */
-    public function removePhone(\AddressBookBundle\Entity\Phone $phones)
+    public function removePhone(\AddressBookBundle\Entity\Phone $phone)
     {
-        $this->phones->removeElement($phones);
+        $this->phones->removeElement($phone);
     }
 
     /**
@@ -224,9 +224,9 @@ class Contact
      * @param \AddressBookBundle\Entity\Email $email
      * @return Contact
      */
-    public function addEmail(\AddressBookBundle\Entity\Email $emails)
+    public function addEmail(\AddressBookBundle\Entity\Email $email)
     {
-        $this->emails[] = $emails;
+        $this->emails[] = $email;
 
         return $this;
     }
@@ -236,9 +236,9 @@ class Contact
      *
      * @param \AddressBookBundle\Entity\Email $email
      */
-    public function removeEmail(\AddressBookBundle\Entity\Email $emails)
+    public function removeEmail(\AddressBookBundle\Entity\Email $email)
     {
-        $this->emails->removeElement($emails);
+        $this->emails->removeElement($email);
     }
 
     /**
