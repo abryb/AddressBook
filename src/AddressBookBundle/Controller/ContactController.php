@@ -70,8 +70,8 @@ class ContactController extends Controller
      */
     public function deleteAction($id)
     {
-        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->find($id);
         $em = $this->getDoctrine()->getManager();
+        $contact = $em->getRepository("AddressBookBundle:Contact")->find($id);
         $em->remove($contact);
         $em->flush();
 
@@ -118,6 +118,7 @@ class ContactController extends Controller
         if ($formContact->isSubmitted() && $formContact->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            $em->persist($contact);
             $em->flush();
 
             return $this->redirectToRoute('addressbook_contact_show', ['id' => $contact->getId()]);
