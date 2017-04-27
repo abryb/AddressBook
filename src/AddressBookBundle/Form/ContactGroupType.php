@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContactType extends AbstractType
+class ContactGroupType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -14,13 +14,7 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('surname')
-            ->add('description')
-            ->add('groups',null, [
-                'choice_label' => 'name',
-                'expanded' => "true",
-                "multiple" => "true"]);
+            ->add('name');
     }
     
     /**
@@ -29,7 +23,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AddressBookBundle\Entity\Contact'
+            'data_class' => 'AddressBookBundle\Entity\ContactGroup'
         ));
     }
 
@@ -38,7 +32,7 @@ class ContactType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'addressbookbundle_contact';
+        return 'addressbookbundle_contactgroup';
     }
 
 

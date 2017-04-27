@@ -24,7 +24,8 @@ class ContactController extends Controller
      */
     public function showAllAction()
     {
-        $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->findBy([], ['surname' => 'ASC']);
+        $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
+            ->findBy([], ['surname' => 'ASC']);
         return ['contacts' => $contacts];
     }
 
@@ -35,7 +36,8 @@ class ContactController extends Controller
      */
     public function showAction($id)
     {
-        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")->find($id);
+        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
+            ->loadAllAboutContact($id);
         return ['contact' => $contact];
     }
 

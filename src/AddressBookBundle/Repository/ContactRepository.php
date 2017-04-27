@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
+    public function loadAllAboutContact($id)
+    {
+        $dql = "SELECT c,a,e,p,g FROM AddressBookBundle:Contact c 
+                LEFT JOIN c.addresses a
+                LEFT JOIN c.emails e
+                LEFT JOIN c.phones p
+                LEFT JOIN c.groups g
+                WHERE c.id=:id";
+
+        return $this->getEntityManager()->createQuery($dql)->setParameter('id', $id)->getOneOrNullResult();
+    }
 }
