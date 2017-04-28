@@ -47,13 +47,19 @@ class ContactController extends Controller
 
 
     /**
-     * @Route("/{id}", requirements={"id"="\d+"})
+     * @Route("/{id}.{name}", requirements={"id"="\d+"}, defaults={"name" = "default"})
      * @Template(":Contact:show_single.html.twig")
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id, $name)
     {
-        $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
+        $em = $this->getDoctrine()->getManager();
+        $contact = $em->getRepository("AddressBookBundle:Contact")
             ->loadAllAboutContact($id);
+        $contactName = $contact->getName()."-". $contact->getSurname();
+        if ($name !== $contactName) {
+            return $this->redirectToRoute("addressbook_contact_show", [
+                "id" => $contact->getId(), "name" => $contactName]);
+        }
         return ['contact' => $contact];
     }
 
@@ -97,7 +103,7 @@ class ContactController extends Controller
     }
 
     /**
-     * @Route("/{id}/modify")
+     * @Route("/{id}/modify/", requirements={"id" = "\d+"})
      * @Template(":Contact:modify.html.twig")
      */
     public function modifyAction(Request $request, $id)
