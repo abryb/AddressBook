@@ -28,7 +28,8 @@ class ContactRepository extends EntityRepository
     public function findContactsLike($search)
     {
         $dql = "SELECT c FROM AddressBookBundle:Contact c 
-                WHERE CONCAT(c.name,' ',c.surname) LIKE :search";
+                WHERE CONCAT(c.name,' ',c.surname) LIKE :search 
+                ORDER BY c.surname ASC";
 
         return $this->getEntityManager()->createQuery($dql)
             ->setParameter('search', '%'.$search.'%')->getResult();

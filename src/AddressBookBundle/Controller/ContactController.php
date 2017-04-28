@@ -24,7 +24,7 @@ class ContactController extends Controller
      */
     public function showAllAction(Request $request)
     {
-        if ($request->isMethod('GET')) {
+        if ($request->query->get("search")) {
             $contacts = $this->getDoctrine()->getManager()->getRepository("AddressBookBundle:Contact")
                 ->findContactsLike($request->query->get("search"));
         } else {
@@ -33,18 +33,6 @@ class ContactController extends Controller
         }
         return ['contacts' => $contacts];
     }
-
-    /**
-     * @Route("/search/{string}")
-     * @Template(":Contact:show_all.html.twig")
-     */
-    public function searchAction($string)
-    {
-        $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
-            ->findContactsLike($string);
-        return ['contacts'=>$contacts];
-    }
-
 
     /**
      * @Route("/{id}.{name}", requirements={"id"="\d+"}, defaults={"name" = "default"})
