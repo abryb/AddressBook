@@ -24,12 +24,12 @@ class ContactController extends Controller
      */
     public function showAllAction(Request $request)
     {
+        $repository = $this->getDoctrine()->getManager()->getRepository("AddressBookBundle:Contact");
+
         if ($request->query->get("search")) {
-            $contacts = $this->getDoctrine()->getManager()->getRepository("AddressBookBundle:Contact")
-                ->findContactsLike($request->query->get("search"));
+            $contacts = $repository->findContactsLike($request->query->get("search"));
         } else {
-            $contacts = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
-                ->findBy([], ['surname' => 'ASC']);
+            $contacts = $repository->findBy([], ['surname' => 'ASC']);
         }
         return ['contacts' => $contacts];
     }
@@ -43,11 +43,17 @@ class ContactController extends Controller
         $em = $this->getDoctrine()->getManager();
         $contact = $em->getRepository("AddressBookBundle:Contact")
             ->loadAllAboutContact($id);
+        if (!$contact) {
+            throw $this->createNotFoundException("Contact not found");
+        }
+
         $contactName = $contact->getName()."-". $contact->getSurname();
+
         if ($name !== $contactName) {
             return $this->redirectToRoute("addressbook_contact_show", [
                 "id" => $contact->getId(), "name" => $contactName]);
         }
+
         return ['contact' => $contact];
     }
 
@@ -84,6 +90,9 @@ class ContactController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $contact = $em->getRepository("AddressBookBundle:Contact")->find($id);
+        if (!$contact) {
+            throw $this->createNotFoundException("Contact not found");
+        }
         $em->remove($contact);
         $em->flush();
 
