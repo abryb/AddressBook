@@ -1,4 +1,6 @@
 {% extends "base.html.twig" %}
+{% block title %}Contacts{% endblock %}
+
 {% block body %}
     <form method="GET" action="{{ path('addressbook_contact_showall') }}">
         <input type="text" name="search">

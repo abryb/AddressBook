@@ -1,4 +1,5 @@
 {% extends "base.html.twig" %}
+{% block title %}{{ group.name }}{% endblock %}
 {% block body %}
     <h1>{{ group.name }}</h1>
     {% for contact in group.contacts %}

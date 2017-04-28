@@ -1,4 +1,5 @@
 {% extends "base.html.twig" %}
+{% block title %}{{ contact.name|first }}.{{ contact.surname }}{% endblock %}
 {% block body %}
     <div>
         <div>
@@ -55,24 +56,24 @@
     <p>Modify Contact:</p>
     {{ form_start(formContact) }}
     {{ form_widget(formContact) }}
-    <input type="submit">
+    <button type="submit">Modify Contact</button>
     {{ form_end(formContact) }}
     <hr>
     <p>Add phone number:</p>
     {{ form_start(formPhone) }}
     {{ form_widget(formPhone) }}
-    <input type="submit">
+    <button type="submit">Add Phone Number</button>
     {{ form_end(formPhone) }}
     <hr>
     <p>Add address: </p>
     {{ form_start(formAddress) }}
     {{ form_widget(formAddress) }}
-    <input type="submit">
+    <button type="submit">Add Address</button>
     {{ form_end(formAddress) }}
     <hr>
     <p>Add Email.</p>
     {{ form_start(formEmail) }}
     {{ form_widget(formEmail) }}
-    <input type="submit">
+    <button type="submit">Add Email</button>
     {{ form_end(formEmail) }}
 {% endblock %}
