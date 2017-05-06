@@ -5,7 +5,11 @@
     <hr>
     {% for group in groups %}
         <div>
-            <h3><a href="{{ path('addressbook_group_showsingle', {'id':group.id}) }}">{{ group.name }}</a></h3>
+        <form class="delete" action="{{ path('addressbook_group_delete', {'id':group.id}) }}"
+              method="POST">
+            <button class="delete">Delete</button>
+        </form>
+            <a class="show-all" href="{{ path('addressbook_group_showsingle', {'id':group.id}) }}">{{ group.name }}</a>
         </div>
         <hr>
     {% else %}

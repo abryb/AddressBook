@@ -4,10 +4,12 @@ namespace AddressBookBundle\Controller;
 
 use AddressBookBundle\Entity\ContactGroup;
 use AddressBookBundle\Form\ContactGroupType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * Class GroupController
@@ -59,7 +61,36 @@ class GroupController extends Controller
     {
         $group = $this->getDoctrine()->getManager()
             ->getRepository("AddressBookBundle:ContactGroup")->find($id);
+        if (!$group) {
+            throw $this->createNotFoundException("Group not found");
+        }
 
         return ['group' => $group];
+    }
+
+    /**
+     * @Route("/{id}/delete/")
+     * @Method("POST")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $contactGroup = $em->getRepository("AddressBookBundle:ContactGroup")->find($id);
+        if (!$contactGroup) {
+            throw $this->createNotFoundException("Group not found");
+        }
+
+        $contacts = $em->getRepository("AddressBookBundle:Contact")
+            ->loadAllWithGroup($id);
+
+        foreach ($contacts as $contact) {
+            $contact->getGroups()->removeElement($contactGroup);
+        }
+
+        $em->remove($contactGroup);
+        $em->flush();
+
+        return $this->redirectToRoute('addressbook_group_show');
     }
 }

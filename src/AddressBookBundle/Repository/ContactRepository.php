@@ -34,4 +34,14 @@ class ContactRepository extends EntityRepository
         return $this->getEntityManager()->createQuery($dql)
             ->setParameter('search', '%'.$search.'%')->getResult();
     }
+
+    public function loadAllWithGroup($groupId)
+    {
+        $dql = "SELECT c, g FROM AddressBookBundle:Contact c 
+                LEFT JOIN c.groups g
+                WHERE g.id =:id";
+
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('id', $groupId)->getResult();
+    }
 }
