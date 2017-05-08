@@ -12,27 +12,34 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
-    public function loadAllAboutContact($id)
+    public function loadAllAboutContact($id, $userId)
     {
-        $dql = "SELECT c,a,e,p,g FROM AddressBookBundle:Contact c 
+        $dql = "SELECT c,a,e,p,g,u FROM AddressBookBundle:Contact c 
                 LEFT JOIN c.addresses a
                 LEFT JOIN c.emails e
                 LEFT JOIN c.phones p
                 LEFT JOIN c.groups g
-                WHERE c.id=:id";
+                LEFT JOIN c.user u
+                WHERE c.id=:id
+                AND u.id=:userId";
 
         return $this->getEntityManager()->createQuery($dql)
-            ->setParameter('id', $id)->getOneOrNullResult();
+            ->setParameter('id', $id)
+            ->setParameter('userId', $userId)
+            ->getOneOrNullResult();
     }
 
-    public function findContactsLike($search)
+    public function findContactsLike($search, $userID)
     {
         $dql = "SELECT c FROM AddressBookBundle:Contact c 
                 WHERE CONCAT(c.name,' ',c.surname) LIKE :search 
+                AND c.user =:userID
                 ORDER BY c.surname ASC";
 
         return $this->getEntityManager()->createQuery($dql)
-            ->setParameter('search', '%'.$search.'%')->getResult();
+            ->setParameter('search', '%'.$search.'%')
+            ->setParameter('userID', $userID)
+            ->getResult();
     }
 
     public function loadAllWithGroup($groupId)

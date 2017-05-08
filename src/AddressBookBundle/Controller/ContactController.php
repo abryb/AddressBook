@@ -15,7 +15,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * Class ContactController
+ * @package AddressBookBundle\Controller
+ * @Security("has_role('ROLE_USER')")
+ */
 class ContactController extends Controller
 {
     /**
@@ -25,11 +31,11 @@ class ContactController extends Controller
     public function showAllAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository("AddressBookBundle:Contact");
-
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($request->query->get("search")) {
-            $contacts = $repository->findContactsLike($request->query->get("search"));
+            $contacts = $repository->findContactsLike($request->query->get("search"), $user->getId());
         } else {
-            $contacts = $repository->findBy([], ['surname' => 'ASC']);
+            $contacts = $repository->findBy(['user' => $user->getId()], ['surname' => 'ASC']);
         }
         return ['contacts' => $contacts];
     }
@@ -41,8 +47,9 @@ class ContactController extends Controller
     public function showAction(Request $request, $id, $name)
     {
         $em = $this->getDoctrine()->getManager();
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $contact = $em->getRepository("AddressBookBundle:Contact")
-            ->loadAllAboutContact($id);
+            ->loadAllAboutContact($id, $userId);
         if (!$contact) {
             throw $this->createNotFoundException("Contact not found");
         }
@@ -64,7 +71,9 @@ class ContactController extends Controller
      */
     public function createAction(Request $request)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $contact = new Contact();
+        $contact->setUser($user);
 
         $form = $this->createForm(ContactType::class, $contact);
 
@@ -105,8 +114,9 @@ class ContactController extends Controller
      */
     public function modifyAction(Request $request, $id)
     {
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $contact = $this->getDoctrine()->getRepository("AddressBookBundle:Contact")
-            ->loadAllAboutContact($id);
+            ->loadAllAboutContact($id, $userId);
         if (!$contact) {
             throw $this->createNotFoundException("Contact not found");
         }
