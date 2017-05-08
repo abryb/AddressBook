@@ -35,3 +35,6 @@ Creating new group.
 
 "/groups/{id}"<br>
 Listing all contacts in group. 
+
+"/groups/{id}/delete"<br>
+Reception of delete group POST request
