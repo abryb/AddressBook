@@ -24,10 +24,16 @@ class User extends BaseUser
      */
     protected $contacts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AddressBookBundle\Entity\ContactGroup", mappedBy="user")
+     */
+    protected $groups;
+
     public function __construct()
     {
         parent::__construct();
         $this->contacts = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
