@@ -8,7 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * Class AddressController
+ * @package AddressBookBundle\Controller
+ * @Security("has_role('ROLE_USER')")
+ */
 class AddressController extends Controller
 {
     /**
@@ -17,8 +23,10 @@ class AddressController extends Controller
      */
     public function addAddressAction(Request $request, $id)
     {
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $contact = $em->getRepository("AddressBookBundle:Contact")->find($id);
+        $contact = $em->getRepository("AddressBookBundle:Contact")
+            ->findOneBy(['id' => $id, 'user' => $userId]);
 
         if (!$contact) {
             throw $this->createNotFoundException("Contact not found");
@@ -45,9 +53,10 @@ class AddressController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-
-        $contact = $em->getRepository("AddressBookBundle:Contact")->find($id);
+        $contact = $em->getRepository("AddressBookBundle:Contact")
+            ->findOneBy(['id' => $id, 'user' => $userId]);
         if (!$contact) {
             throw $this->createNotFoundException("Contact not found");
         }
