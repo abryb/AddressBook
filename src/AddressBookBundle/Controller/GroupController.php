@@ -9,11 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class GroupController
  * @Route("/groups")
+ * @Security("has_role('ROLE_USER')")
  */
 class GroupController extends Controller
 {
@@ -23,8 +24,9 @@ class GroupController extends Controller
      */
     public function newAction(Request $request)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $contactGroup = new ContactGroup();
-
+        $contactGroup->setUser($user);
         $form = $this->createForm(ContactGroupType::class, $contactGroup);
 
         $form->handleRequest($request);
@@ -47,8 +49,9 @@ class GroupController extends Controller
      */
     public function showAction()
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $groups = $this->getDoctrine()->getManager()
-            ->getRepository("AddressBookBundle:ContactGroup")->findAll();
+            ->getRepository("AddressBookBundle:ContactGroup")->findBy(['user' => $user->getId()]);
 
         return ['groups' => $groups];
     }
@@ -59,8 +62,9 @@ class GroupController extends Controller
      */
     public function showSingleAction($id)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $group = $this->getDoctrine()->getManager()
-            ->getRepository("AddressBookBundle:ContactGroup")->find($id);
+            ->getRepository("AddressBookBundle:ContactGroup")->findOneBy(['id' => $id, 'user' => $user->getId()]);
         if (!$group) {
             throw $this->createNotFoundException("Group not found");
         }
@@ -74,9 +78,10 @@ class GroupController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $contactGroup = $em->getRepository("AddressBookBundle:ContactGroup")->find($id);
+        $contactGroup = $em->getRepository("AddressBookBundle:ContactGroup")->findOneBy(['id' => $id, 'user' => $user->getId()]);
         if (!$contactGroup) {
             throw $this->createNotFoundException("Group not found");
         }

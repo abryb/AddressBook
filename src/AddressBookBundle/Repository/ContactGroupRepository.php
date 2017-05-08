@@ -12,5 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactGroupRepository extends EntityRepository
 {
+    public function findByIdAndUserId($groupId, $userId)
+    {
+        $dql = "SELECT g, u FROM AddressBookBundle:ContactGroup g
+                LEFT JOIN g.user u
+                WHERE g.id =:id
+                AND u.id=:userId";
 
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('id', $groupId)
+            ->setParameter('userId', $userId)
+            ->getResult();
+    }
 }
