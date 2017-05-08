@@ -27,13 +27,13 @@ class User extends BaseUser
     /**
      * @ORM\OneToMany(targetEntity="AddressBookBundle\Entity\ContactGroup", mappedBy="user")
      */
-    protected $groups;
+    protected $contactGroups;
 
     public function __construct()
     {
         parent::__construct();
         $this->contacts = new ArrayCollection();
-        $this->groups = new ArrayCollection();
+        $this->contactGroups = new ArrayCollection();
     }
 
     /**
@@ -67,5 +67,38 @@ class User extends BaseUser
     public function getContacts()
     {
         return $this->contacts;
+    }
+
+    /**
+     * Add contactGroups
+     *
+     * @param \AddressBookBundle\Entity\ContactGroup $contactGroups
+     * @return User
+     */
+    public function addContactGroup(\AddressBookBundle\Entity\ContactGroup $contactGroups)
+    {
+        $this->contactGroups[] = $contactGroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove contactGroups
+     *
+     * @param \AddressBookBundle\Entity\ContactGroup $contactGroups
+     */
+    public function removeContactGroup(\AddressBookBundle\Entity\ContactGroup $contactGroups)
+    {
+        $this->contactGroups->removeElement($contactGroups);
+    }
+
+    /**
+     * Get contactGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContactGroups()
+    {
+        return $this->contactGroups;
     }
 }

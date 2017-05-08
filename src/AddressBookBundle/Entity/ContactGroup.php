@@ -35,7 +35,7 @@ class ContactGroup
     private $contacts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\User", inversedBy="groups")
+     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\User", inversedBy="contactGroups")
      */
     private $user;
 
