@@ -68,6 +68,11 @@ class Contact
      */
     private $groups;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AddressBookBundle\Entity\User", inversedBy="contacts")
+     */
+    private $user;
+
 
     /**
      * Constructor
@@ -290,5 +295,28 @@ class Contact
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AddressBookBundle\Entity\User $user
+     * @return Contact
+     */
+    public function setUser(\AddressBookBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AddressBookBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
